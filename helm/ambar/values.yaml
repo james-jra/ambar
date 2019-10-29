@@ -1,0 +1,89 @@
+#### Elasticsearch ####
+elasticsearch:
+  enabled: true
+  # Use custom image for ES allowing us to install plugins
+  # TODO
+  # image: my-registry.com/my-repo/my-image
+  # imageTag: 7.4.1
+
+  # Permit co-located instances.
+  antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  esJavaOpts: "-Xmx256m -Xms256m"
+
+  # Allocate smaller chunks of memory per pod.
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "1G"
+    limits:
+      cpu: "1000m"
+      memory: "1G"
+
+  persistence:
+    enabled: false
+#### /Elasticsearch ####
+
+#### MongoDB ####
+mongodb:
+  enabled: true
+
+  usePassword: true
+  mongodbRootPassword: password
+  mongodbUsername: ambar-user
+  mongodbPassword: password
+  mongodbDatabase: ambar_data
+  mongodbExtraFlags:
+    - "--wiredTigerCacheSizeGB=2" # From docker-compose.yaml
+
+  service:
+    type: ClusterIP
+    port: 27017
+
+  replicaSet:
+    enabled: false
+
+  persistence:
+    enabled: false
+#### /MongoDB ####
+
+#### RabbitMQ ####
+rabbitmq:
+  enabled: true
+
+  rabbitmq:
+    username: admin
+    password: password
+
+  service:
+    type: ClusterIP
+    # Amqp port
+    port: 5672
+    # RabbitMQ Manager port
+    managerPort: 15672
+
+  persistence:
+    enabled: false
+#### /RabbitMQ ####
+
+#### Redis ####
+redis:
+  enabled: true
+  usePassword: true
+  password: password
+  redisPort: 6379
+
+  # Configured in docker-compose.yaml but not allowed on our cluster
+  # securityContext:
+  #   sysctls:
+  #     - name: net.core.somaxconn
+  #       value: "1024"
+  cluster:
+    enabled: false
+
+  master:
+    persistence:
+      enabled: false
+#### /Redis ####
+

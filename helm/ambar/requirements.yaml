@@ -1,0 +1,25 @@
+dependencies:
+  - name: elasticsearch
+    version: "~7.4.1"
+    repository: "https://helm.elastic.co"
+    condition: elasticsearch.enabled
+    tags:
+      - elasticsearch-ambar
+  - name: mongodb
+    version: "~7.4.4" # Versioning looks ok - check client
+    repository: "https://kubernetes-charts.storage.googleapis.com"
+    condition: mongodb.enabled
+    tags:
+      - mongodb-ambar
+  - name: rabbitmq
+    version: "~6.10.1" # Version bump looks ok - check client
+    repository: "https://kubernetes-charts.storage.googleapis.com"
+    condition: rabbitmq.enabled
+    tags:
+      - rabbitmq-ambar
+  - name: redis
+    version: "~9.4.3" # Version bump looks ok - check client
+    repository: "https://kubernetes-charts.storage.googleapis.com"
+    condition: redis.enabled
+    tags:
+      - redis-ambar
